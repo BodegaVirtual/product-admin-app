@@ -66,11 +66,19 @@ A modern, responsive administrative interface for managing products, categories,
 
 To create an optimized production build:
 
+1.  **Build your React app**:
 ```bash
 npm run build
 ```
-
-The output will be in the `dist/` folder. This can be deployed to the S3 bucket defined in the backend `template.yaml` and served via CloudFront.
+2.  **Sync files to S3**:
+```bash
+aws s3 sync dist/ s3://[Your-S3-Bucket] --delete
+```
+3.  **Create the CloudFront invalidation for all files**:
+```bash
+aws cloudfront create-invalidation --distribution-id [Your-Distribution-Identifier] --paths "/*"
+```
+---
 
 ## 📂 Project Structure
 
@@ -79,6 +87,17 @@ The output will be in the `dist/` folder. This can be deployed to the S3 bucket 
 * **`src/pages`**: Main view components (Dashboard, Product List, Order Details).
 * **`src/context`**: React Context providers for Auth and App state.
 * **`public/`**: Static assets and icons.
+
+---
+
+## 🌐 Demo Environments
+Use the following credentials to test the live demo applications:
+
+| Application | URL | User | Password |
+| :--- | :--- | :--- | :--- |
+| **Admin App** | https://admindemo.bolito.co/ | `test@test.co` | `Demo1234` |
+
+---
 
 ## 📄 License
 
